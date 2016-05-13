@@ -1,0 +1,18 @@
+brushes:
+  default-brush-name: "circle.png"
+  
+  default-size: 15
+  max-size: 305
+  
+  default-intensity: 4
+  max-intensity: 10
+  
+disabled-worlds:
+  - "world name here"
+  
+max-undos: 50
+
+auto-rotation: true
+bounding-box: false
+flat: false
+mountain: false
