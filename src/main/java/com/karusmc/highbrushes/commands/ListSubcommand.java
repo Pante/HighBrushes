@@ -76,8 +76,8 @@ public class ListSubcommand implements Subcommand, CommandUtil {
         
         ArrayList<String> brushes = new ArrayList<>(BrushHandler.getBrushes().keySet());
         
-        sender.sendMessage(ChatColor.GOLD + "==== Brushes: " + ChatColor.RED + args[1] + ChatColor.GOLD 
-                + " === Page: " + ChatColor.RED + page + "/" + totalPages + ChatColor.GOLD + " ====");
+        sender.sendMessage(ChatColor.GOLD + "==== Brushes ===="
+                + "=== Page: " + ChatColor.RED + page + "/" + totalPages + ChatColor.GOLD + " ====");
         
         IntStream.range(page * SIZE - SIZE, brushes.size()).limit(SIZE)
         .forEach(i -> sender.sendMessage(ChatColor.RED + brushes.get(i)));

@@ -18,6 +18,7 @@
 package com.karusmc.highbrushes.brush;
 
 import com.karusmc.highbrushes.io.BrushHandler;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -30,16 +31,24 @@ public class Brush {
     private String type;
     private BufferedImage image;
     
+    private BufferedImage cachedImage;
+    
     private int size;
     private int intensity;
     
     public Brush() {
         
         type = BrushHandler.getDefaultBrush();
-        image = BrushHandler.getBrushes().get(type);
+        image = BrushHandler.getBrushes().get(BrushHandler.getDefaultBrush());
         
         size = BrushHandler.getDefaultSize();
         intensity = BrushHandler.getDefaultIntensity();
+        
+        BufferedImage resizedImage = new BufferedImage(size, size, 1);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(image, 0, 0, size, size, null);
+        g.dispose();
+        cachedImage = resizedImage;
         
     }
     
@@ -50,6 +59,12 @@ public class Brush {
         
         this.size = size;
         this.intensity = intensity;
+        
+        BufferedImage resizedImage = new BufferedImage(size, size, 1);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(image, 0, 0, size, size, null);
+        g.dispose();
+        cachedImage = resizedImage;
         
     }
     
@@ -64,12 +79,28 @@ public class Brush {
     }
     
     
+    public BufferedImage getCachedImage() {
+        return cachedImage;
+    }
+    
+    public void setCachedImage(BufferedImage image) {
+        this.cachedImage = image;
+    }
+    
+    
     public BufferedImage getImage() {
         return image;
     }
     
     public void setImage(BufferedImage image) {
         this.image = image;
+        
+        BufferedImage resizedImage = new BufferedImage(size, size, 1);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(image, 0, 0, size, size, null);
+        g.dispose();
+        cachedImage = resizedImage;
+        
     }
     
     
@@ -79,6 +110,13 @@ public class Brush {
     
     public void setSize(int size) {
         this.size = size;
+        
+        BufferedImage resizedImage = new BufferedImage(size, size, 1);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(image, 0, 0, size, size, null);
+        g.dispose();
+        cachedImage = resizedImage;
+        
     }
     
     

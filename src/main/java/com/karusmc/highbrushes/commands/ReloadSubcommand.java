@@ -74,7 +74,7 @@ public class ReloadSubcommand implements Subcommand, CommandUtil {
                 ConfigHandler.load(out);
                 break;
                 
-            case "arena":
+            case "brushes":
                 loadBrushes(sender, args, out);
                 break;
                 

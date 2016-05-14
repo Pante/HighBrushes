@@ -63,20 +63,19 @@ public class MainCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         
         if (args.length == 0 || subcommands.get(args[0]) == null) {
-            sender.sendMessage(ChatColor.RED + "Invalid argument. Type \"/ck help\" for a list of commands."); 
+            sender.sendMessage(ChatColor.RED + "Invalid argument. Type \"/hb help\" for a list of commands."); 
         } else if (args[args.length - 1].equals("?")) {
             
             CommandMeta meta = subcommands.get(args[0]).getMeta();
             ArrayList<String> messages = new ArrayList<>();
             
-            messages.add(ChatColor.GOLD + "==== Help: " + ChatColor.RED + args[0] + " ====");
+            messages.add(ChatColor.GOLD + "==== Help: " + ChatColor.RED + args[0] + ChatColor.GOLD + " ====");
             
-            messages.add(ChatColor.GOLD + "\nAliases: [" + ChatColor.RED);
-            meta.getAliases().stream().forEach(message -> messages.add(message + ", "));
+            messages.add(ChatColor.GOLD + "\nAliases: [" + ChatColor.RED + meta.getAliases().toString());
             
             messages.add(ChatColor.GOLD + "]\nDescription: " + ChatColor.RED + meta.getDesc());
             
-            messages.add(ChatColor.GOLD + "\nUsage" + ChatColor.RED + meta.getUsage());
+            messages.add(ChatColor.GOLD + "\nUsage: " + ChatColor.RED + meta.getUsage());
             
             sender.sendMessage(messages.toArray(new String[messages.size()]));
             

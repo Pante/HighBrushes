@@ -29,6 +29,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class ConfigHandler {
     
     private static int maxUndos;
+    private static int blockRate;
+    private static int delay;
     
     private static ArrayList<String> disabledWorlds;
     
@@ -54,6 +56,8 @@ public class ConfigHandler {
         
     
         maxUndos = config.getInt("max-undos", 50);
+        blockRate = config.getInt("block-rate", 250);
+        delay = config.getInt("delay", 2);
         
         disabledWorlds = new ArrayList<>(config.getStringList("disabled-worlds"));
         
@@ -72,6 +76,24 @@ public class ConfigHandler {
     
     public static void setMaxUndos(int max) {
         maxUndos = max;
+    }
+    
+    
+    public static int getBlockRate() {
+        return blockRate;
+    }
+    
+    public static void setBlockRate(int rate) {
+        blockRate = rate;
+    }
+    
+    
+    public static int getDelay() {
+        return delay;
+    }
+    
+    public static void setDelay(int d) {
+        delay = d;
     }
     
     

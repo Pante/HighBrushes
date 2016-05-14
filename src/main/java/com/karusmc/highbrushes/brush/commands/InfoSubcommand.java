@@ -71,8 +71,8 @@ public class InfoSubcommand implements Subcommand, CommandUtil {
         messages.add(ChatColor.GOLD + "Size: " + ChatColor.RED + paintBrush.getBrush().getSize() + " ");
         messages.add(ChatColor.GOLD + "Intensity: " + ChatColor.RED + paintBrush.getBrush().getIntensity() + "\n");
         
-        messages.add(ChatColor.GOLD + "Auto rotating: " + ChatColor.RED + paintBrush.isAutoRotation() + " ");
-        messages.add(ChatColor.GOLD + "Bound boxing: " + ChatColor.RED + paintBrush.isBoundingBox() + "\n");
+        messages.add(ChatColor.GOLD + "Auto-rotation: " + ChatColor.RED + paintBrush.isAutoRotation() + " ");
+        messages.add(ChatColor.GOLD + "Bounding-box: " + ChatColor.RED + paintBrush.isBoundingBox() + "\n");
         
         messages.add(ChatColor.GOLD + "Flat mode: " + ChatColor.RED + paintBrush.isFlat() + " ");
         messages.add(ChatColor.GOLD + "Mountain mode: " + ChatColor.RED + paintBrush.isMoutain() + "\n");

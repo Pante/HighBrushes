@@ -17,6 +17,7 @@
  */
 package com.karusmc.highbrushes.brush;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
@@ -27,9 +28,9 @@ public enum Direction {
     
     NORTH, SOUTH, EAST, WEST;
     
-    public static Direction caculate(Player player) {
+    public static Direction caculate(Location location) {
         
-        double rotation = (player.getLocation().getYaw() - 90.0) % 360.0;
+        double rotation = (location.getYaw() - 90.0) % 360.0;
         
         if (rotation < 0.0) {
           rotation += 360.0;

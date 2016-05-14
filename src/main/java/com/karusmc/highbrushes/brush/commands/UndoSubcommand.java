@@ -22,6 +22,7 @@ import com.karusmc.highbrushes.commands.CommandUtil;
 import com.karusmc.highbrushes.commands.Subcommand;
 import com.karusmc.highbrushes.io.BrushHandler;
 import com.karusmc.highbrushes.io.ConfigHandler;
+import com.karusmc.highbrushes.listeners.PlayerHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -60,7 +61,7 @@ public class UndoSubcommand implements Subcommand, CommandUtil {
         int undo;
         
         if (args.length == 1) {
-            // TODO: Undo max blocks here
+            //new Eraser(PlayerHandler.UNDOS.get(player.getUniqueId()), ConfigHandler.getMaxUndos()).undoActions();
             sender.sendMessage(ChatColor.GOLD + "Actions have been undone");
             return;
             
@@ -78,8 +79,14 @@ public class UndoSubcommand implements Subcommand, CommandUtil {
         } else if (undo > BrushHandler.getMaxSize()) {
             sender.sendMessage(ChatColor.RED + "Undo amount is over the maximum allowed size (" + ConfigHandler.getMaxUndos() + ")");
         } else {
-            // TODO: Undo the specified amount here
-            sender.sendMessage(ChatColor.GOLD + "Actions undone: " + undo);
+            
+            if (PlayerHandler.UNDOS.containsKey(player.getUniqueId())) {
+                sender.sendMessage(ChatColor.GOLD + "Actions undone: " + undo);
+            } else {
+                //new Eraser(PlayerHandler.UNDOS.get(player.getUniqueId()), undo).undoActions();
+                sender.sendMessage(ChatColor.GOLD + "Undoing " + undo + " steps.");
+            }
+            
         }
         
     }

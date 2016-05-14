@@ -71,6 +71,7 @@ public class HelpSubcommand implements Subcommand, CommandUtil {
              commands = new ArrayList<>(MainCommand.COMMANDS.entrySet().stream().filter(entry -> 
                 sender.hasPermission(entry.getValue().getMeta().getPermission())
             ).collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue())).keySet());
+
         } else {
             commands = new ArrayList<>(MainCommand.COMMANDS.entrySet().stream().filter(entry -> 
                 entry.getKey().contains(args[1]) && sender.hasPermission(entry.getValue().getMeta().getPermission())
@@ -89,9 +90,13 @@ public class HelpSubcommand implements Subcommand, CommandUtil {
             return;
         }
         
-        
-        sender.sendMessage(ChatColor.GOLD + "==== Help: " + ChatColor.RED + args[1] + ChatColor.GOLD 
+        if (args.length == 1) {
+            sender.sendMessage(ChatColor.GOLD + "==== Help: " + ChatColor.RED + "All" + ChatColor.GOLD 
+                    + " === Page: " + ChatColor.RED + page + "/" + totalPages + ChatColor.GOLD + " ====");
+        } else {
+            sender.sendMessage(ChatColor.GOLD + "==== Help: " + ChatColor.RED + args[1] + ChatColor.GOLD 
                 + " === Page: " + ChatColor.RED + page + "/" + totalPages + ChatColor.GOLD + " ====");
+        }
         
         IntStream.range(page * SIZE - SIZE, commands.size()).limit(SIZE)
         .forEach(i -> sender.sendMessage(ChatColor.GOLD + MainCommand.COMMANDS.get(commands.get(i)).getMeta().getUsage()));

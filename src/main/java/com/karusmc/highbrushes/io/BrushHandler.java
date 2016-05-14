@@ -128,7 +128,7 @@ public class BrushHandler {
         
         FileConfiguration config = HighBrushes.instance.getConfig();
         
-        defaultBrush = config.getString("brushes.default-brush-name", "circle.png");
+        defaultBrush = config.getString("brushes.default-brush-name", "circle");
         
         File file = new File(FOLDER, defaultBrush);
         if (!file.exists()) {

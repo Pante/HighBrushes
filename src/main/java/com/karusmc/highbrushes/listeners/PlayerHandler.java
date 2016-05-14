@@ -18,13 +18,13 @@
 package com.karusmc.highbrushes.listeners;
 
 import com.karusmc.highbrushes.brush.PaintBrush;
+import java.util.ArrayList;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -38,7 +38,7 @@ public class PlayerHandler implements Listener {
     
     // Fields
     public static final HashMap<UUID, PaintBrush> PLAYERS = new HashMap<>();
-    public static final HashMap<UUID, List<List<Location>>> UNDOS = new HashMap<>();
+    public static final HashMap<UUID, ArrayList<ArrayList<Location>>> UNDOS = new HashMap<>();
     
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
@@ -49,7 +49,9 @@ public class PlayerHandler implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
+        
         PLAYERS.remove(player.getUniqueId());
+        UNDOS.remove(player.getUniqueId());
     }
     
 }

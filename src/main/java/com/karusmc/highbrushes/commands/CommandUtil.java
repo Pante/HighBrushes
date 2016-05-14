@@ -59,7 +59,7 @@ public interface CommandUtil {
     // Checks if the number of arguments specified are valid
     public default boolean checkLength(CommandSender sender, Subcommand cmd, String[] args, int min, int max) {
         if (args.length < min || args.length > max) {
-            sender.sendMessage(ChatColor.WHITE + cmd.getMeta().getUsage());
+            sender.sendMessage(ChatColor.RED + cmd.getMeta().getUsage());
             return false;
         } else return true;
     }

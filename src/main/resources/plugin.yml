@@ -2,6 +2,7 @@ name: HighBrushes
 main: com.karusmc.highbrushes.HighBrushes
 version: 0.01
 description: A goBrushes fork/rewrite. Create mountains higher than Kevaasaurus
+depend: [WorldEdit]
 author: [goCreative Arcaniax, PanteLegacy]
 
 commands:

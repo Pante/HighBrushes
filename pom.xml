@@ -69,6 +69,14 @@
             <version>2.5</version>
         </dependency>
         
+        <dependency>
+            <groupId>com.sk89q</groupId>
+            <artifactId>worldedit</artifactId>
+            <version>6.1.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/WorldEdit.jar</systemPath>
+        </dependency>
+        
     </dependencies>
     
     <build>

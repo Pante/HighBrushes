@@ -54,16 +54,23 @@ public class SelectSubcommand implements Subcommand, CommandUtil {
     public void execute(CommandSender sender, String[] args) {
         
         // Inheritied from CommandUtil
-        if (!checkLength(sender, this, args, 2, 2)) return;
+        if (!checkLength(sender, this, args, 1, 2)) return;
         if (!checkPlayer(sender, meta.getPermission())) return;
         
-        if (BrushHandler.getBrushes().containsKey(args[2])) {
-            Player player = (Player) sender;
+        Player player = (Player) sender;
+        
+        if (args.length == 1) {
+            PlayerHandler.PLAYERS.get(player.getUniqueId()).getBrush().setType(BrushHandler.getDefaultBrush());
+            PlayerHandler.PLAYERS.get(player.getUniqueId()).getBrush().setImage(BrushHandler.getBrushes().get(BrushHandler.getDefaultBrush()));
             
-            PlayerHandler.PLAYERS.get(player.getUniqueId()).getBrush().setType(args[2]);
-            PlayerHandler.PLAYERS.get(player.getUniqueId()).getBrush().setImage(BrushHandler.getBrushes().get(args[2]));
+            sender.sendMessage(ChatColor.RED + "Brush type set to: default (" + BrushHandler.getDefaultBrush() + ")");
             
-            sender.sendMessage(ChatColor.RED + "Brush type set to: " + args[2]);
+        } else if (BrushHandler.getBrushes().containsKey(args[1])) {
+            
+            PlayerHandler.PLAYERS.get(player.getUniqueId()).getBrush().setType(args[1]);
+            PlayerHandler.PLAYERS.get(player.getUniqueId()).getBrush().setImage(BrushHandler.getBrushes().get(args[1]));
+            
+            sender.sendMessage(ChatColor.RED + "Brush type set to: " + args[1]);
             
         } else {
             sender.sendMessage(ChatColor.RED + "Unknown brush type.");
