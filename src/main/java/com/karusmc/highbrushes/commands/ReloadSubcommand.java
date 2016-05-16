@@ -20,12 +20,14 @@ package com.karusmc.highbrushes.commands;
 import com.karusmc.highbrushes.io.BrushHandler;
 import com.karusmc.highbrushes.io.ConfigHandler;
 import com.karusmc.highbrushes.io.Output;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * Reloads the plugin.
  */
 public class ReloadSubcommand implements Subcommand, CommandUtil {
     
@@ -52,7 +54,7 @@ public class ReloadSubcommand implements Subcommand, CommandUtil {
         if (!checkLength(sender, this, args, 1, 3)) return;
         if (!checkSender(sender, meta.getPermission())) return;
         
-        Output<String, Exception> out = (message, exception) -> {
+        Output<Exception> out = (message, exception) -> {
             if (exception == null) {
                 sender.sendMessage(message);
             } else {
@@ -62,7 +64,7 @@ public class ReloadSubcommand implements Subcommand, CommandUtil {
         
         
         if (args.length == 1 || args[1].equals("all")) {
-            ConfigHandler.load(out);
+            ConfigHandler.loadDefaults(out);
             BrushHandler.loadDefaults(out);
             BrushHandler.loadBrushes(out);
             return;
@@ -71,7 +73,7 @@ public class ReloadSubcommand implements Subcommand, CommandUtil {
         switch (args[1].toLowerCase()) {
             
             case "config":
-                ConfigHandler.load(out);
+                ConfigHandler.loadDefaults(out);
                 break;
                 
             case "brushes":
@@ -86,7 +88,7 @@ public class ReloadSubcommand implements Subcommand, CommandUtil {
         
     }
     
-    private void loadBrushes(CommandSender sender, String[] args, Output<String, Exception> out) {
+    private void loadBrushes(CommandSender sender, String[] args, Output<Exception> out) {
         if (args.length <= 2) {
             BrushHandler.loadBrushes(out);
         } else sender.sendMessage(BrushHandler.loadBrush(args[2]));

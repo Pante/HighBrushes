@@ -20,10 +20,12 @@ package com.karusmc.highbrushes.io;
 /**
  *
  * @author PanteLegacy @ karusmc.com
- * @param <T> is the result that is going to be processed.
- * @param <E> exception thrown
+ * A output format.
+ * @param <E> An exception or any of its subclasses
  */
 @FunctionalInterface
-public interface Output<T, E extends Exception> {
-    public void out(T result, E exception);
+public interface Output<E extends Exception> {
+    
+    public void out(String message, E exception);
+    
 }

@@ -1,5 +1,5 @@
 brushes:
-  default-brush-name: "circle"
+  default-brush-name: "cliff"
   
   default-size: 15
   max-size: 305
@@ -11,8 +11,6 @@ disabled-worlds:
   - "world name here"
   
 max-undos: 50
-block-rate: 250
-delay: 2
 
 auto-rotation: true
 bounding-box: false

@@ -18,9 +18,11 @@
 package com.karusmc.highbrushes.commands;
 
 import com.karusmc.highbrushes.HighBrushes;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,16 +31,22 @@ import org.bukkit.command.CommandSender;
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * The main command.
  */
 public class MainCommand implements CommandExecutor {
     
     // Fields
+    /** Contains commands by their fully registered names */
     public static final HashMap<String, Subcommand> COMMANDS = new HashMap<>();
     
     private HashMap<String, Subcommand> subcommands = new HashMap<>();
 
     
-    // Registers the method in the hashmap
+    /** Registers the method with the main command instance
+     * 
+     * @param fullCommmandName The full command name written in the plugin.yml
+     * @param subcommand The subcommand to register.
+     */
     public void registerSubcommand(String fullCommmandName, Subcommand subcommand) {
         
         COMMANDS.put(fullCommmandName, subcommand);

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.karusmc</groupId>
     <artifactId>HighBrushes</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -77,6 +77,20 @@
             <systemPath>${basedir}/lib/WorldEdit.jar</systemPath>
         </dependency>
         
+        <!-- Mockito for testing -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+        </dependency>
+        
+        <!-- http://mvnrepository.com/artifact/org.powermock/powermock-module-junit4 -->
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>1.6.5</version>
+        </dependency>
+        
     </dependencies>
     
     <build>
@@ -89,6 +103,7 @@
                 <directory>${basedir}/src/main/resources</directory>
                 <includes>
                     <include>*.yml</include>
+                    <include>*.png</include>
                 </includes>
             </resource>
         </resources>

@@ -32,19 +32,18 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
-
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * A Utility class that handles the loading of brushes and their defaults.
  */
 public class BrushHandler {
     
@@ -64,8 +63,12 @@ public class BrushHandler {
     
     private BrushHandler() {}
     
-    
-    public static void loadBrushes(Output<String, Exception> out) {
+    /** Loads the brushes async from disk.
+     * 
+     * @param out The output format.
+     */
+    public static void loadBrushes(Output<Exception> out) {
+                
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -74,16 +77,18 @@ public class BrushHandler {
                     FOLDER.mkdirs();
                 }
                 
-                File defaultFile = new File(FOLDER, "circle.png");
+                File defaultFile = new File(FOLDER, "cliff.png");
                 if (!defaultFile.exists()) {
-                    try (InputStream inputStream = new BufferedInputStream(HighBrushes.instance.getResource("circle.png")); 
+
+                    BufferedImage image = null;
+                    
+                    try (InputStream inputStream = new BufferedInputStream(HighBrushes.instance.getResource("cliff.png"));
                             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(defaultFile))) {
-                        
                         IOUtils.copy(inputStream, outputStream);
-                        
                     } catch (IOException e) {
-                        out.out("Failed to retrieve circle.png from jar!", e);
+                        out.out("Failed to retrieve cliff.png from jar!", e);
                     }
+
                 }
                 
                 HashMap<String, BufferedImage> temp = new HashMap<>();
@@ -105,6 +110,11 @@ public class BrushHandler {
         }.runTaskAsynchronously(HighBrushes.instance);
     }
     
+    /** Loads a specific brush from disk.
+     * 
+     * @param name The brush name without the file extension.
+     * @return the brush name
+     */
     public static String loadBrush(String name) {
         
         File file = new File(FOLDER, name + ".png");
@@ -123,14 +133,17 @@ public class BrushHandler {
         
     }
     
-    
-    public static void loadDefaults(Output<String, Exception> out) {
+    /** Loads the default brush settings from the config.yml.
+     * 
+     * @param out The output format.
+     */
+    public static void loadDefaults(Output<Exception> out) {
         
         FileConfiguration config = HighBrushes.instance.getConfig();
         
-        defaultBrush = config.getString("brushes.default-brush-name", "circle");
+        defaultBrush = config.getString("brushes.default-brush-name", "cliff");
         
-        File file = new File(FOLDER, defaultBrush);
+        File file = new File(FOLDER, defaultBrush + ".png");
         if (!file.exists()) {
             out.out(ChatColor.RED + "Default brush could not be loaded", new Exception());
         }
@@ -145,6 +158,11 @@ public class BrushHandler {
     
     
     // <------ Getter & Setter methods ------>
+    
+    /** Gets the loaded brushes.
+     * 
+     * @return The loaded brushes.
+     */
     public static HashMap<String, BufferedImage> getBrushes() {
         if (brushes == null) {
             brushes = new HashMap<>();

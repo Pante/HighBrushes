@@ -27,6 +27,7 @@ import org.bukkit.command.CommandSender;
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * Displays information about a command
  */
 public class HelpSubcommand implements Subcommand, CommandUtil {
     

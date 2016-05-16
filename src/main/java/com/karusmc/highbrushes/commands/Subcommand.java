@@ -22,9 +22,14 @@ import org.bukkit.command.CommandSender;
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * A subcommand to be registered with a main command.
  */
 public interface Subcommand {
     
+    /** Contains the code to execute.
+     * @param sender The sender
+     * @param args The arguments
+     */
     public void execute(CommandSender sender, String[] args);
 
     

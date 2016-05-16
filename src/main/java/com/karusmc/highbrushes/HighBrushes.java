@@ -18,33 +18,38 @@
 package com.karusmc.highbrushes;
 
 import com.karusmc.highbrushes.commands.*;
-import com.karusmc.highbrushes.brush.commands.*;
+import com.karusmc.highbrushes.brushes.commands.*;
 import com.karusmc.highbrushes.io.BrushHandler;
 import com.karusmc.highbrushes.io.ConfigHandler;
 import com.karusmc.highbrushes.io.Output;
 import com.karusmc.highbrushes.listeners.Paint;
 import com.karusmc.highbrushes.listeners.PlayerHandler;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * The main class.
  */
+
 public class HighBrushes extends JavaPlugin {
     
     // Fields
+    /** Static instance of the plugin.*/
     public static HighBrushes instance;
     private WorldEditPlugin we;
     
-    public Output<String, Exception> log = (message, exception) -> {
+    /** An instance of Output that logs the message in console. */
+    public Output<Exception> log = (message, exception) -> {
         if (exception == null) {
             getLogger().info(ChatColor.stripColor(message));
         } else {
             getLogger().severe(ChatColor.stripColor(message));
-        }
+}
     };
     
     
@@ -53,7 +58,7 @@ public class HighBrushes extends JavaPlugin {
         instance = this;
         we = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
         
-        ConfigHandler.load(log);
+        ConfigHandler.loadDefaults(log);
         BrushHandler.loadDefaults(log);
         BrushHandler.loadBrushes(log);
         
@@ -64,13 +69,16 @@ public class HighBrushes extends JavaPlugin {
     
     @Override
     public void onDisable() {
-        
+        PlayerHandler.PLAYERS.clear();
+        PlayerHandler.UNDOS.clear();
     }
     
     
     // <--- Helper methods for registering commands & events --->
 
+    /** Wrapper method that registers all the plugin's commands. */
     private void registerCommands() {
+        
         MainCommand command = new MainCommand();
         
         command.registerSubcommand("highbrushes about", new AboutSubcommand());
@@ -89,12 +97,14 @@ public class HighBrushes extends JavaPlugin {
         
     }
 
-
+    /** Wrapper method that registers all the plugin's events.*/
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new Paint(), this);
         getServer().getPluginManager().registerEvents(new PlayerHandler(), this);
     }
     
+    /** Gets the instance of WorldEdit.
+     * @return a WorldEditPlugin instance registered in onEnable() method.**/
     public WorldEditPlugin getWorldEdit() {
         return we;
     }

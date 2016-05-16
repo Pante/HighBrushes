@@ -18,32 +18,37 @@
 package com.karusmc.highbrushes.io;
 
 import com.karusmc.highbrushes.HighBrushes;
+
 import java.io.File;
 import java.util.ArrayList;
+
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * Utility class that loads setting from config.yml.
  */
 public class ConfigHandler {
     
+    // Fields
     private static int maxUndos;
-    private static int blockRate;
-    private static int delay;
     
     private static ArrayList<String> disabledWorlds;
     
     
-    private static boolean autoRotation;
-    private static boolean boundingBox;
+    private static boolean autoRotate;
+    private static boolean boxBounded;
     private static boolean flat;
     private static boolean mountain;
     
     
     private ConfigHandler() {}
     
-    public static void load(Output<String, Exception> output) {
+    /** Loads the default variables from config.yml.
+     * @param output An output format.
+    */
+    public static void loadDefaults(Output<Exception> output) {
         
         if (!new File(HighBrushes.instance.getDataFolder(), "config.yml").exists()) {
             output.out("config.yml not found, creating!", null);
@@ -56,13 +61,11 @@ public class ConfigHandler {
         
     
         maxUndos = config.getInt("max-undos", 50);
-        blockRate = config.getInt("block-rate", 250);
-        delay = config.getInt("delay", 2);
         
         disabledWorlds = new ArrayList<>(config.getStringList("disabled-worlds"));
         
-        autoRotation = config.getBoolean("auto-rotation", false);
-        boundingBox = config.getBoolean("bounding-box", false);
+        autoRotate = config.getBoolean("auto-rotation", false);
+        boxBounded = config.getBoolean("bounding-box", false);
         flat = config.getBoolean("flat", false);
         mountain = config.getBoolean("mountain", false);
         
@@ -78,25 +81,6 @@ public class ConfigHandler {
         maxUndos = max;
     }
     
-    
-    public static int getBlockRate() {
-        return blockRate;
-    }
-    
-    public static void setBlockRate(int rate) {
-        blockRate = rate;
-    }
-    
-    
-    public static int getDelay() {
-        return delay;
-    }
-    
-    public static void setDelay(int d) {
-        delay = d;
-    }
-    
-    
     public static ArrayList<String> getDisabledWorlds() {
         return disabledWorlds;
     }
@@ -106,21 +90,21 @@ public class ConfigHandler {
     }
     
     
-    public static boolean getDefaultAutoRotation() {
-        return autoRotation;
+    public static boolean getDefaultAutoRotate() {
+        return autoRotate;
     }
     
-    public static void setDefaultAutoRotation(boolean enabled) {
-        autoRotation = enabled;
+    public static void setDefaultAutoRotate(boolean enabled) {
+        autoRotate = enabled;
     }
     
     
-    public static boolean getDefaultBoundingBox() {
-        return boundingBox;
+    public static boolean getDefaultBoxBounded() {
+        return boxBounded;
     }
     
-    public static void setDefaultBoundingBox(boolean enabled) {
-        boundingBox = enabled;
+    public static void setDefaultBoxBounded(boolean enabled) {
+        boxBounded = enabled;
     }
     
     
@@ -140,5 +124,4 @@ public class ConfigHandler {
     public static void setDefaultMountain(boolean enabled) {
         mountain = enabled;
     }
-   
 }

@@ -25,6 +25,7 @@ import org.bukkit.command.CommandSender;
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * Displays plugin information.
  */
 public class AboutSubcommand implements Subcommand, CommandUtil {
     
@@ -53,10 +54,11 @@ public class AboutSubcommand implements Subcommand, CommandUtil {
         if (!checkSender(sender, meta.getPermission())) return;
         
         sender.sendMessage(ChatColor.GOLD 
-                + "HighBrushes version: " + HighBrushes.instance.getDescription().getVersion() + "\n"
-                + HighBrushes.instance.getDescription().getDescription() + "\n"
-                + "Author(s): goCreative Arcaniax, PanteLegacy @ karusmc.com\n"
-                + "Source code & development resources: " + ChatColor.RED + "https://github.com/Pante/HighBrushes \n"
+                + "HighBrushes version: " + ChatColor.RED + HighBrushes.instance.getDescription().getVersion() + "\n"
+                + ChatColor.GOLD + HighBrushes.instance.getDescription().getDescription() + "\n"
+                + ChatColor.GOLD + "Author(s): " + ChatColor.RED + "goCreative Arcaniax, Aerios and PanteLegacy @ karusmc.com\n"
+                + ChatColor.GOLD + "Source code & development resources: " + ChatColor.RED + "https://github.com/Pante/HighBrushes \n"
+                + ChatColor.GOLD + "Buy more brushes here: " + ChatColor.RED + "https://sellfy.com/aerios"
                 + ChatColor.GOLD + "Type " + ChatColor.RED + "\"/hb help\"" + ChatColor.GOLD + " for a list of commands.");
         
     }

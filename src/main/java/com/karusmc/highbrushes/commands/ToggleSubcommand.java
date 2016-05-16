@@ -17,8 +17,9 @@
  */
 package com.karusmc.highbrushes.commands;
 
-import com.karusmc.highbrushes.brush.PaintBrush;
+import com.karusmc.highbrushes.brushes.PaintBrush;
 import com.karusmc.highbrushes.listeners.PlayerHandler;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,6 +27,7 @@ import org.bukkit.entity.Player;
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * Toggles the settings of a player's paintbrush.
  */
 public class ToggleSubcommand implements Subcommand, CommandUtil {
     
@@ -66,47 +68,49 @@ public class ToggleSubcommand implements Subcommand, CommandUtil {
         } else {
             
             switch (args[1].toLowerCase()) {
-                case "auto-rotation":
-                    if (paintBrush.isAutoRotation()) {
-                        paintBrush.setAutoRotation(false);
-                        sender.sendMessage(ChatColor.GOLD + "Auto rotation has been disabled");
+                case "autorotate":
+                    if (paintBrush.getPalette().isAutoRotate()) {
+                        paintBrush.getPalette().setAutoRotate(false);
+                        sender.sendMessage(ChatColor.GOLD + "Auto rotate has been disabled");
                     } else {
-                        paintBrush.setAutoRotation(true);
-                        sender.sendMessage(ChatColor.GOLD + "Auto rotation has been enabled");
+                        paintBrush.getPalette().setAutoRotate(true);
+                        sender.sendMessage(ChatColor.GOLD + "Auto rotate has been enabled");
                     }
                     break;
                     
-                case "bounding-box":
-                    if (paintBrush.isBoundingBox()) {
-                        paintBrush.setBoundingBox(false);
-                        sender.sendMessage(ChatColor.GOLD + "Bounding box has been disabled");
+                case "boxbounded":
+                    if (paintBrush.getPalette().isBoxBounded()) {
+                        paintBrush.getPalette().setBoxBounded(false);
+                        sender.sendMessage(ChatColor.GOLD + "Box bounded has been disabled");
                     } else {
-                        paintBrush.setBoundingBox(true);
-                        sender.sendMessage(ChatColor.GOLD + "Bounding box has been enabled");
+                        paintBrush.getPalette().setBoxBounded(true);
+                        sender.sendMessage(ChatColor.GOLD + "Box bounded has been enabled");
                     }
                     break;
                     
                 case "flat":
-                    if (paintBrush.isFlat()) {
-                        paintBrush.setFlat(false);
+                    if (paintBrush.getPalette().isFlat()) {
+                        paintBrush.getPalette().setFlat(false);
                         sender.sendMessage(ChatColor.GOLD + "Flat mode has been disabled");
                     } else {
-                        paintBrush.setFlat(true);
+                        paintBrush.getPalette().setFlat(true);
                         sender.sendMessage(ChatColor.GOLD + "Flat mode has been enabled");
                     }
                     break;
                     
                 case "mountain":
-                    if (paintBrush.isMoutain()) {
-                        paintBrush.setMountain(false);
+                    if (paintBrush.getPalette().isMountain()) {
+                        paintBrush.getPalette().setMountain(false);
                         sender.sendMessage(ChatColor.GOLD + "Mountain has been disabled");
                     } else {
-                        paintBrush.setMountain(true);
+                        paintBrush.getPalette().setMountain(true);
                         sender.sendMessage(ChatColor.GOLD + "Mountain has been enabled");
                     }
                     break;
                     
                 default:
+                    sender.sendMessage(ChatColor.RED + meta.getUsage());
+                    break;
                     
             }
             

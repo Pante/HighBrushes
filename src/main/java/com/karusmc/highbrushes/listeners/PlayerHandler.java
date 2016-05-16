@@ -17,13 +17,13 @@
  */
 package com.karusmc.highbrushes.listeners;
 
-import com.karusmc.highbrushes.brush.PaintBrush;
-import java.util.ArrayList;
+import com.karusmc.highbrushes.brushes.PaintBrush;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
-import org.bukkit.Location;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,20 +33,31 @@ import org.bukkit.event.player.PlayerQuitEvent;
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * Handles player related events
  */
 public class PlayerHandler implements Listener {
     
     // Fields
+    
+    /** Maps a player's UUID to a PaintBrush object*/
     public static final HashMap<UUID, PaintBrush> PLAYERS = new HashMap<>();
+    
+    /** Maps a player's UUID to a arraylist of Location objects in another arraylist.*/
     public static final HashMap<UUID, ArrayList<ArrayList<Location>>> UNDOS = new HashMap<>();
     
     @EventHandler
+    /** Attaches a PaintBrush object to the player on join.
+     * 
+     */
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        PLAYERS.put(player.getUniqueId(), new PaintBrush(true));
+        PLAYERS.put(player.getUniqueId(), new PaintBrush());
     }
     
     @EventHandler
+    /** Clears the player's undo list and removes the attached PaintBrush from the hashmap.
+     * 
+     */
     public void onQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
         

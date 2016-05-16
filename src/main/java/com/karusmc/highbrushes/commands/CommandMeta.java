@@ -26,6 +26,7 @@ import java.util.List;
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * Information about the command.
  */
 public class CommandMeta {
     

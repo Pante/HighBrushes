@@ -1,9 +1,9 @@
 name: HighBrushes
 main: com.karusmc.highbrushes.HighBrushes
-version: 0.01
+version: 1.00
 description: A goBrushes fork/rewrite. Create mountains higher than Kevaasaurus
 depend: [WorldEdit]
-author: [goCreative Arcaniax, PanteLegacy]
+author: [goCreative Arcaniax, Aerios, PanteLegacy]
 
 commands:
   
@@ -30,7 +30,7 @@ commands:
     permission: highbrushes.help
     
   "highbrushes list":
-    aliases: [list, ;]
+    aliases: [list, li, l]
     description: Returns a list of availible brushes
     usage: /highbrushes list [(page)]
     permission: highbrushes.list
@@ -44,7 +44,7 @@ commands:
   "highbrushes toggle":
     aliases: [toggle, t]
     description: Enables and disabled a brush 
-    usage: /highbrushes toggle [(auto-rotation/bounding-box/flat/mountain)]
+    usage: /highbrushes toggle [(autorotate/boxbounded/flat/mountain)]
     permission: highbrushes.toggle
     
   # <------ Brush subcommands ------>

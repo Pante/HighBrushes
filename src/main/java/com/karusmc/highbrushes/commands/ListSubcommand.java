@@ -18,6 +18,7 @@
 package com.karusmc.highbrushes.commands;
 
 import com.karusmc.highbrushes.io.BrushHandler;
+
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
@@ -27,6 +28,7 @@ import org.bukkit.command.CommandSender;
 /**
  *
  * @author PanteLegacy @ karusmc.com
+ * Lists the available brushes
  */
 public class ListSubcommand implements Subcommand, CommandUtil {
     
