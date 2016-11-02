@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Brush.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Raster</a> &gt; <a href="index.source.html" class="el_package">com.karusmc.raster.brushes</a> &gt; <span class="el_source">Brush.java</span></div><h1>Brush.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (C) 2016 PanteLegacy @ karusmc.com
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package com.karusmc.raster.brushes;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+/**
+ *
+ * @author PanteLegacy @ karusmc.com
+ */
+<span class="nc" id="L27">public class Brush {</span>
+    public BufferedImage resize(BufferedImage image, int width, int height) {
+<span class="nc" id="L29">        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);</span>
+<span class="nc" id="L30">        Graphics2D graphics = resized.createGraphics();</span>
+<span class="nc" id="L31">        graphics.drawImage(image, 0, 0, width, height, null);</span>
+<span class="nc" id="L32">        graphics.dispose();</span>
+        
+<span class="nc" id="L34">        return resized;</span>
+    }
+    public float[][] cache(BufferedImage image) {
+<span class="nc" id="L37">        int width = image.getWidth();</span>
+<span class="nc" id="L38">        int height = image.getHeight();</span>
+<span class="nc" id="L39">        float[][] result = new float[height][width];</span>
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        for (int row = 0; row &lt; height; row++) {</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">            for (int col = 0; col &lt; width; col++) {</span>
+<span class="nc" id="L43">                int rgb = image.getRGB(col, row);</span>
+    
+<span class="nc" id="L45">                int red = rgb &gt;&gt;&gt; 16 &amp; 0xFF;</span>
+<span class="nc" id="L46">                int green = rgb &gt;&gt;&gt; 8 &amp; 0xFF;</span>
+<span class="nc" id="L47">                int blue = rgb &amp; 0xFF;</span>
+
+<span class="nc" id="L49">                float sum = (red + blue + green);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">                if (sum != 0) {</span>
+<span class="nc" id="L51">                    sum = (float) (sum / 3.0 / 255.0);</span>
+                }
+                
+<span class="nc" id="L54">                result[row][col] = sum;</span>
+            }
+        }
+
+<span class="nc" id="L58">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
