@@ -17,17 +17,70 @@
  */
 package com.karusmc.raster.brushes;
 
+import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.ImageIO;
+
+import junitparams.*;
+
+import org.junit.*;
+import org.junit.runner.RunWith;
+
+import static org.junit.Assert.*;
+
 /**
  *
  * @author PanteLegacy @ karusmc.com
  */
+@RunWith(JUnitParamsRunner.class)
 public class BrushTest {
     
     private Brush brush;
+    private BufferedImage image;
     
     
-    public BrushTest() {
-        brush = new Brush();
+    public BrushTest() throws IOException{
+        image = ImageIO.read(getClass().getClassLoader().getResource("brushes/TestImage1.png"));
+        brush = new Brush(image, 10, 1);
+    }
+    
+    
+    @Before
+    public void setup() {
+        brush.setReferenceImage(image);
+        brush.setSize(10);
+        brush.setIntensity(1);
+    }
+    
+    @Test
+    @Parameters({"1", "5", "3"})
+    public void setSize(int size){
+        brush.setSize(size);
+        
+        assertEquals(size, brush.getSize());
+        assertEquals(size, brush.getSize());
+    }
+    
+    
+    @Test
+    public void setReferenceImage_caches() throws IOException {
+        brush.setReferenceImage(ImageIO.read(getClass().getClassLoader().getResource("brushes/TestImage2.png")));
+        assertEquals(0.8980392, brush.getHeight(0, 0), 0.00001);
+    }
+    
+    
+    @Test
+    public void getHeight() {
+        brush.setIntensity(2);
+        assertEquals(1.5843137, brush.getHeight(0, 0), 0.00001);
+    }
+    
+    
+    @Test
+    @Parameters({"0, 0, 0.526969", "9, 9, 0.526969", "0, 9, 0.526969", "9, 0, 0.526969", "5, 5, 0.86508"})
+    public void getSmoothenHeight(int x, int z, double expected) {
+        System.out.print(brush.getSize());
+        assertEquals(expected, brush.getSmoothHeight(x, z), 0.00001);
     }
     
 }

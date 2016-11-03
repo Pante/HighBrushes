@@ -18,44 +18,114 @@
 package com.karusmc.raster.brushes;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 
 /**
  *
  * @author PanteLegacy @ karusmc.com
  */
-<span class="nc" id="L27">public class Brush {</span>
-    public BufferedImage resize(BufferedImage image, int width, int height) {
-<span class="nc" id="L29">        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);</span>
-<span class="nc" id="L30">        Graphics2D graphics = resized.createGraphics();</span>
-<span class="nc" id="L31">        graphics.drawImage(image, 0, 0, width, height, null);</span>
-<span class="nc" id="L32">        graphics.dispose();</span>
-        
-<span class="nc" id="L34">        return resized;</span>
-    }
-    public float[][] cache(BufferedImage image) {
-<span class="nc" id="L37">        int width = image.getWidth();</span>
-<span class="nc" id="L38">        int height = image.getHeight();</span>
-<span class="nc" id="L39">        float[][] result = new float[height][width];</span>
-
-<span class="nc bnc" id="L41" title="All 2 branches missed.">        for (int row = 0; row &lt; height; row++) {</span>
-<span class="nc bnc" id="L42" title="All 2 branches missed.">            for (int col = 0; col &lt; width; col++) {</span>
-<span class="nc" id="L43">                int rgb = image.getRGB(col, row);</span>
+public class Brush {
     
-<span class="nc" id="L45">                int red = rgb &gt;&gt;&gt; 16 &amp; 0xFF;</span>
-<span class="nc" id="L46">                int green = rgb &gt;&gt;&gt; 8 &amp; 0xFF;</span>
-<span class="nc" id="L47">                int blue = rgb &amp; 0xFF;</span>
+<span class="fc" id="L29">    private static final int[][] WEIGHTAGE = new int[][] {</span>
+        {0, 1, 1, 1, 0},
+        {1, 1, 2, 1, 1},
+        {1, 2, 3, 2, 1},
+        {1, 1, 2, 1, 1},
+        {0, 1, 1, 1, 0}
+    };
+    
 
-<span class="nc" id="L49">                float sum = (red + blue + green);</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">                if (sum != 0) {</span>
-<span class="nc" id="L51">                    sum = (float) (sum / 3.0 / 255.0);</span>
-                }
+    private BufferedImage image;
+    private double[][] cachedGrayscale;
+    private int intensity;
+    
+    
+<span class="fc" id="L43">    public Brush(BufferedImage image, int size, int intensity) {</span>
+<span class="fc" id="L44">        this.image = image;</span>
+<span class="fc" id="L45">        setSize(size);</span>
+<span class="fc" id="L46">        this.intensity = intensity;</span>
+<span class="fc" id="L47">    }</span>
+    
+    
+    public void setReferenceImage(BufferedImage image) {
+<span class="fc" id="L51">        this.image = image;</span>
+<span class="fc" id="L52">        setSize(cachedGrayscale.length);</span>
+<span class="fc" id="L53">    }</span>
+    
+    
+    public int getSize() {
+<span class="fc" id="L57">        return cachedGrayscale.length;</span>
+    }
+    
+    public void setSize(int size) {
+<span class="fc" id="L61">        BufferedImage resized = new BufferedImage(size, size, BufferedImage.TYPE_BYTE_GRAY);</span>
+<span class="fc" id="L62">        Graphics2D graphics = resized.createGraphics();</span>
+<span class="fc" id="L63">        graphics.drawImage(image, 0, 0, size, size, null);</span>
+<span class="fc" id="L64">        graphics.dispose();</span>
+        
+<span class="fc" id="L66">        cache(resized);</span>
+<span class="fc" id="L67">    }</span>
+    
+    
+    private void cache(BufferedImage image) {
+<span class="fc" id="L71">        int width = image.getWidth();</span>
+<span class="fc" id="L72">        int height = image.getHeight();</span>
+<span class="fc" id="L73">        double[][] result = new double[height][width];</span>
+
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (int row = 0; row &lt; height; row++) {</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            for (int col = 0; col &lt; width; col++) {</span>
                 
-<span class="nc" id="L54">                result[row][col] = sum;</span>
+<span class="fc" id="L78">                int rgb = image.getRGB(col, row);</span>
+                
+<span class="fc" id="L80">                int red = (rgb &gt;&gt; 16) &amp; 0xFF;</span>
+<span class="fc" id="L81">                int green = (rgb &gt;&gt; 8) &amp; 0xFF;</span>
+<span class="fc" id="L82">                int blue = rgb &amp; 0xFF;</span>
+
+<span class="fc" id="L84">                int sum = red + blue + green;</span>
+
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">                if (sum == 0) {</span>
+<span class="nc" id="L87">                    result[row][col] = 0;</span>
+                    
+                } else {
+<span class="fc" id="L90">                    result[row][col] = sum / 3.0 / 255.0;</span>
+                }
             }
         }
 
-<span class="nc" id="L58">        return result;</span>
+<span class="fc" id="L95">        cachedGrayscale = result;</span>
+<span class="fc" id="L96">    }</span>
+    
+    
+    public int getIntensity() {
+<span class="nc" id="L100">        return intensity;</span>
     }
+    
+    public void setIntensity(int intensity) {
+<span class="fc" id="L104">        this.intensity = intensity;</span>
+<span class="fc" id="L105">    }</span>
+
+    
+    public double getHeight(int x, int z) {
+<span class="fc" id="L109">        return cachedGrayscale[x][z] * intensity;</span>
+    }
+    
+    public double getSmoothHeight(int originalX, int originalZ) {
+<span class="fc" id="L113">        double height = 0;</span>
+        
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (int x = Math.max(originalX - 2, 0); x &lt; Math.min(originalX + 3, cachedGrayscale.length); x++) {</span>
+<span class="fc" id="L116">            int offsetX = originalX - x + 2;</span>
+            
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            for (int z = Math.max(originalZ - 2, 0); z &lt; Math.min(originalZ + 3, cachedGrayscale.length); z++) {</span>
+<span class="fc" id="L119">                int offsetZ = originalZ - z + 2;</span>
+<span class="fc" id="L120">                System.out.println(&quot;Mask X: &quot; + offsetX + &quot; Mask Z: &quot; + offsetZ);</span>
+<span class="fc" id="L121">                height += cachedGrayscale[x][z] * WEIGHTAGE[offsetX][offsetZ];</span>
+            }
+        }
+
+<span class="fc" id="L125">        height /= 27;</span>
+<span class="fc" id="L126">        height = height * intensity - Math.pow(height * 0.45, 2) + 0.2;</span>
+<span class="fc" id="L127">        return height;</span>
+    }
+    
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

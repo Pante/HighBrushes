@@ -26,17 +26,38 @@ import java.awt.image.*;
  */
 public class Brush {
     
+    private static final int[][] WEIGHTAGE = new int[][] {
+        {0, 1, 1, 1, 0},
+        {1, 1, 2, 1, 1},
+        {1, 2, 3, 2, 1},
+        {1, 1, 2, 1, 1},
+        {0, 1, 1, 1, 0}
+    };
+    
+
     private BufferedImage image;
-    private float[][] cachedGrayscale;
+    private double[][] cachedGrayscale;
+    private int intensity;
     
     
-    public Brush(BufferedImage image, int size) {
+    public Brush(BufferedImage image, int size, int intensity) {
         this.image = image;
-        cachedGrayscale = cache(image);
+        setSize(size);
+        this.intensity = intensity;
     }
     
     
-    public void resize(int size) {
+    public void setReferenceImage(BufferedImage image) {
+        this.image = image;
+        setSize(cachedGrayscale.length);
+    }
+    
+    
+    public int getSize() {
+        return cachedGrayscale.length;
+    }
+    
+    public void setSize(int size) {
         BufferedImage resized = new BufferedImage(size, size, BufferedImage.TYPE_BYTE_GRAY);
         Graphics2D graphics = resized.createGraphics();
         graphics.drawImage(image, 0, 0, size, size, null);
@@ -45,35 +66,64 @@ public class Brush {
         cache(resized);
     }
     
-    private float[][] cache(BufferedImage image) {
+    
+    private void cache(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();
-        float[][] result = new float[height][width];
+        double[][] result = new double[height][width];
 
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
+                
                 int rgb = image.getRGB(col, row);
-    
-                int red = rgb >>> 16 & 0xFF;
-                int green = rgb >>> 8 & 0xFF;
+                
+                int red = (rgb >> 16) & 0xFF;
+                int green = (rgb >> 8) & 0xFF;
                 int blue = rgb & 0xFF;
 
                 int sum = red + blue + green;
 
                 if (sum == 0) {
-                    result[row][col] = sum;
+                    result[row][col] = 0;
+                    
                 } else {
-                    result[row][col] = (float) (sum / 3.0 / 255.0);
+                    result[row][col] = sum / 3.0 / 255.0;
                 }
             }
         }
 
-        return result;
+        cachedGrayscale = result;
     }
     
     
-    public float[][] getCache() {
-        return cachedGrayscale;
+    public int getIntensity() {
+        return intensity;
+    }
+    
+    public void setIntensity(int intensity) {
+        this.intensity = intensity;
+    }
+
+    
+    public double getHeight(int x, int z) {
+        return cachedGrayscale[x][z] * intensity;
+    }
+    
+    public double getSmoothHeight(int originalX, int originalZ) {
+        double height = 0;
+        
+        for (int x = Math.max(originalX - 2, 0); x < Math.min(originalX + 3, cachedGrayscale.length); x++) {
+            int offsetX = originalX - x + 2;
+            
+            for (int z = Math.max(originalZ - 2, 0); z < Math.min(originalZ + 3, cachedGrayscale.length); z++) {
+                int offsetZ = originalZ - z + 2;
+                height += cachedGrayscale[x][z] * WEIGHTAGE[offsetX][offsetZ];
+            }
+        }
+
+        height /= 27;
+        height = height * intensity - Math.pow(height * 0.45, 2) + 0.2;
+        return height;
     }
     
 }

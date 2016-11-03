@@ -1,4 +1,6 @@
 com\karusmc\raster\brushes\Brush.class
 com\karusmc\raster\brushes\BrushException.class
+com\karusmc\raster\painter\Painter.class
 com\karusmc\raster\Raster.class
 com\karusmc\raster\brushes\BrushFlyweight.class
+com\karusmc\raster\brushes\PainterConfiguration.class
