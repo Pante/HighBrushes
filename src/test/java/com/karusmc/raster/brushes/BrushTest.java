@@ -41,13 +41,13 @@ public class BrushTest {
     
     public BrushTest() throws IOException{
         image = ImageIO.read(getClass().getClassLoader().getResource("brushes/TestImage1.png"));
-        brush = new Brush(image, 10, 1);
+        brush = new Brush("", image, 10, 1);
     }
     
     
     @Before
     public void setup() {
-        brush.setReferenceImage(image);
+        brush.setReferenceImage("", image);
         brush.setSize(10);
         brush.setIntensity(1);
     }
@@ -64,7 +64,7 @@ public class BrushTest {
     
     @Test
     public void setReferenceImage_caches() throws IOException {
-        brush.setReferenceImage(ImageIO.read(getClass().getClassLoader().getResource("brushes/TestImage2.png")));
+        brush.setReferenceImage("", ImageIO.read(getClass().getClassLoader().getResource("brushes/TestImage2.png")));
         assertEquals(0.8980392, brush.getHeight(0, 0), 0.00001);
     }
     

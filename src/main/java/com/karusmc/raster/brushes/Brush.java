@@ -34,20 +34,27 @@ public class Brush {
         {0, 1, 1, 1, 0}
     };
     
-
+    
+    private String name;
     private BufferedImage image;
     private double[][] cachedGrayscale;
     private int intensity;
     
     
-    public Brush(BufferedImage image, int size, int intensity) {
+    public Brush(String name, BufferedImage image, int size, int intensity) {
+        this.name = name;
         this.image = image;
         setSize(size);
         this.intensity = intensity;
     }
     
     
-    public void setReferenceImage(BufferedImage image) {
+    public String getName() {
+        return name;
+    }
+    
+    public void setReferenceImage(String name, BufferedImage image) {
+        this.name = name;
         this.image = image;
         setSize(cachedGrayscale.length);
     }

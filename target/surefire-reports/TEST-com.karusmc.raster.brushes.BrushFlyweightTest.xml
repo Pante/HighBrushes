@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="5" failures="0" name="com.karusmc.raster.brushes.BrushFlyweightTest" time="0.372" errors="0" skipped="0">
+<testsuite tests="5" failures="0" name="com.karusmc.raster.brushes.BrushFlyweightTest" time="0.364" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_92\jre\bin"/>
@@ -61,9 +61,9 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="[0] china mountain 1.png\u002C china-mountain-1 (load)(com.karusmc.raster.brushes.BrushFlyweightTest)" name="[0] china mountain 1.png\u002C china-mountain-1 " time="0.128"/>
-  <testcase classname="[1] circle.png\u002C circle (load)(com.karusmc.raster.brushes.BrushFlyweightTest)" name="[1] circle.png\u002C circle " time="0.032"/>
-  <testcase classname="[2] banner.jpg\u002C banner (load)(com.karusmc.raster.brushes.BrushFlyweightTest)" name="[2] banner.jpg\u002C banner " time="0.035"/>
+  <testcase classname="[0] china mountain 1.png\u002C china-mountain-1 (load)(com.karusmc.raster.brushes.BrushFlyweightTest)" name="[0] china mountain 1.png\u002C china-mountain-1 " time="0.143"/>
+  <testcase classname="[1] circle.png\u002C circle (load)(com.karusmc.raster.brushes.BrushFlyweightTest)" name="[1] circle.png\u002C circle " time="0.027"/>
+  <testcase classname="[2] banner.jpg\u002C banner (load)(com.karusmc.raster.brushes.BrushFlyweightTest)" name="[2] banner.jpg\u002C banner " time="0.036"/>
   <testcase classname="[0] no-such-brush.png (load_ThrowsException)(com.karusmc.raster.brushes.BrushFlyweightTest)" name="[0] no-such-brush.png " time="0.017"/>
-  <testcase classname="[1] china mountain 1 (load_ThrowsException)(com.karusmc.raster.brushes.BrushFlyweightTest)" name="[1] china mountain 1 " time="0"/>
+  <testcase classname="[1] china mountain 1 (load_ThrowsException)(com.karusmc.raster.brushes.BrushFlyweightTest)" name="[1] china mountain 1 " time="0.001"/>
 </testsuite>

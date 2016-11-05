@@ -27,10 +27,69 @@ public class Painter {
     
     private Brush brush;
     
-    private boolean autoRotate;
+    private boolean autoRotation;
     private boolean boxBounded;
     
     private boolean flat;
     private boolean mountain;
+    
+    
+    public Painter(Brush brush) {
+        this(brush, false, false, false, false);
+    }
+    
+    public Painter(Brush brush, boolean autoRotation, boolean boxBounded, boolean flat, boolean mountain) {
+        this.brush = brush;
+        
+        this.autoRotation = autoRotation;
+        this.boxBounded = boxBounded;
+        this.flat = flat;
+        this.mountain = mountain;
+    }
+    
+    
+    public Brush getBrush() {
+        return brush;
+    }
+    
+    public void setBrush(Brush brush) {
+        this.brush = brush;
+    }
+    
+    
+    public boolean isAutoRotation() {
+        return autoRotation;
+    }
+    
+    public void setAutoRotation(boolean autoRotation) {
+        this.autoRotation = autoRotation;
+    }
+    
+    
+    public boolean isBoxBounded() {
+        return boxBounded;
+    }
+    
+    public void setBoxBounded(boolean boxBounded) {
+        this.boxBounded = boxBounded;
+    }
+    
+    
+    public boolean isFlat() {
+        return flat;
+    }
+    
+    public void setFlat(boolean flat) {
+        this.flat = flat;
+    }
+    
+    
+    public boolean isMountain() {
+        return mountain;
+    }
+    
+    public void setMountain(boolean mountain) {
+        this.mountain = mountain;
+    }
     
 }

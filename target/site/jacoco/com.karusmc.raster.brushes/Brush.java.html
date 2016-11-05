@@ -34,97 +34,103 @@ public class Brush {
         {0, 1, 1, 1, 0}
     };
     
-
+    
+    private String name;
     private BufferedImage image;
     private double[][] cachedGrayscale;
     private int intensity;
     
     
-<span class="fc" id="L43">    public Brush(BufferedImage image, int size, int intensity) {</span>
-<span class="fc" id="L44">        this.image = image;</span>
-<span class="fc" id="L45">        setSize(size);</span>
-<span class="fc" id="L46">        this.intensity = intensity;</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L44">    public Brush(String name, BufferedImage image, int size, int intensity) {</span>
+<span class="fc" id="L45">        this.name = name;</span>
+<span class="fc" id="L46">        this.image = image;</span>
+<span class="fc" id="L47">        setSize(size);</span>
+<span class="fc" id="L48">        this.intensity = intensity;</span>
+<span class="fc" id="L49">    }</span>
     
     
-    public void setReferenceImage(BufferedImage image) {
-<span class="fc" id="L51">        this.image = image;</span>
-<span class="fc" id="L52">        setSize(cachedGrayscale.length);</span>
-<span class="fc" id="L53">    }</span>
+    public String getName() {
+<span class="nc" id="L53">        return name;</span>
+    }
+    
+    public void setReferenceImage(String name, BufferedImage image) {
+<span class="fc" id="L57">        this.name = name;</span>
+<span class="fc" id="L58">        this.image = image;</span>
+<span class="fc" id="L59">        setSize(cachedGrayscale.length);</span>
+<span class="fc" id="L60">    }</span>
     
     
     public int getSize() {
-<span class="fc" id="L57">        return cachedGrayscale.length;</span>
+<span class="fc" id="L64">        return cachedGrayscale.length;</span>
     }
     
     public void setSize(int size) {
-<span class="fc" id="L61">        BufferedImage resized = new BufferedImage(size, size, BufferedImage.TYPE_BYTE_GRAY);</span>
-<span class="fc" id="L62">        Graphics2D graphics = resized.createGraphics();</span>
-<span class="fc" id="L63">        graphics.drawImage(image, 0, 0, size, size, null);</span>
-<span class="fc" id="L64">        graphics.dispose();</span>
+<span class="fc" id="L68">        BufferedImage resized = new BufferedImage(size, size, BufferedImage.TYPE_BYTE_GRAY);</span>
+<span class="fc" id="L69">        Graphics2D graphics = resized.createGraphics();</span>
+<span class="fc" id="L70">        graphics.drawImage(image, 0, 0, size, size, null);</span>
+<span class="fc" id="L71">        graphics.dispose();</span>
         
-<span class="fc" id="L66">        cache(resized);</span>
-<span class="fc" id="L67">    }</span>
+<span class="fc" id="L73">        cache(resized);</span>
+<span class="fc" id="L74">    }</span>
     
     
     private void cache(BufferedImage image) {
-<span class="fc" id="L71">        int width = image.getWidth();</span>
-<span class="fc" id="L72">        int height = image.getHeight();</span>
-<span class="fc" id="L73">        double[][] result = new double[height][width];</span>
+<span class="fc" id="L78">        int width = image.getWidth();</span>
+<span class="fc" id="L79">        int height = image.getHeight();</span>
+<span class="fc" id="L80">        double[][] result = new double[height][width];</span>
 
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (int row = 0; row &lt; height; row++) {</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">            for (int col = 0; col &lt; width; col++) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (int row = 0; row &lt; height; row++) {</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            for (int col = 0; col &lt; width; col++) {</span>
                 
-<span class="fc" id="L78">                int rgb = image.getRGB(col, row);</span>
+<span class="fc" id="L85">                int rgb = image.getRGB(col, row);</span>
                 
-<span class="fc" id="L80">                int red = (rgb &gt;&gt; 16) &amp; 0xFF;</span>
-<span class="fc" id="L81">                int green = (rgb &gt;&gt; 8) &amp; 0xFF;</span>
-<span class="fc" id="L82">                int blue = rgb &amp; 0xFF;</span>
+<span class="fc" id="L87">                int red = (rgb &gt;&gt; 16) &amp; 0xFF;</span>
+<span class="fc" id="L88">                int green = (rgb &gt;&gt; 8) &amp; 0xFF;</span>
+<span class="fc" id="L89">                int blue = rgb &amp; 0xFF;</span>
 
-<span class="fc" id="L84">                int sum = red + blue + green;</span>
+<span class="fc" id="L91">                int sum = red + blue + green;</span>
 
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">                if (sum == 0) {</span>
-<span class="nc" id="L87">                    result[row][col] = 0;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">                if (sum == 0) {</span>
+<span class="nc" id="L94">                    result[row][col] = 0;</span>
                     
                 } else {
-<span class="fc" id="L90">                    result[row][col] = sum / 3.0 / 255.0;</span>
+<span class="fc" id="L97">                    result[row][col] = sum / 3.0 / 255.0;</span>
                 }
             }
         }
 
-<span class="fc" id="L95">        cachedGrayscale = result;</span>
-<span class="fc" id="L96">    }</span>
+<span class="fc" id="L102">        cachedGrayscale = result;</span>
+<span class="fc" id="L103">    }</span>
     
     
     public int getIntensity() {
-<span class="nc" id="L100">        return intensity;</span>
+<span class="nc" id="L107">        return intensity;</span>
     }
     
     public void setIntensity(int intensity) {
-<span class="fc" id="L104">        this.intensity = intensity;</span>
-<span class="fc" id="L105">    }</span>
+<span class="fc" id="L111">        this.intensity = intensity;</span>
+<span class="fc" id="L112">    }</span>
 
     
     public double getHeight(int x, int z) {
-<span class="fc" id="L109">        return cachedGrayscale[x][z] * intensity;</span>
+<span class="fc" id="L116">        return cachedGrayscale[x][z] * intensity;</span>
     }
     
     public double getSmoothHeight(int originalX, int originalZ) {
-<span class="fc" id="L113">        double height = 0;</span>
+<span class="fc" id="L120">        double height = 0;</span>
         
-<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (int x = Math.max(originalX - 2, 0); x &lt; Math.min(originalX + 3, cachedGrayscale.length); x++) {</span>
-<span class="fc" id="L116">            int offsetX = originalX - x + 2;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        for (int x = Math.max(originalX - 2, 0); x &lt; Math.min(originalX + 3, cachedGrayscale.length); x++) {</span>
+<span class="fc" id="L123">            int offsetX = originalX - x + 2;</span>
             
-<span class="fc bfc" id="L118" title="All 2 branches covered.">            for (int z = Math.max(originalZ - 2, 0); z &lt; Math.min(originalZ + 3, cachedGrayscale.length); z++) {</span>
-<span class="fc" id="L119">                int offsetZ = originalZ - z + 2;</span>
-<span class="fc" id="L120">                System.out.println(&quot;Mask X: &quot; + offsetX + &quot; Mask Z: &quot; + offsetZ);</span>
-<span class="fc" id="L121">                height += cachedGrayscale[x][z] * WEIGHTAGE[offsetX][offsetZ];</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">            for (int z = Math.max(originalZ - 2, 0); z &lt; Math.min(originalZ + 3, cachedGrayscale.length); z++) {</span>
+<span class="fc" id="L126">                int offsetZ = originalZ - z + 2;</span>
+<span class="fc" id="L127">                height += cachedGrayscale[x][z] * WEIGHTAGE[offsetX][offsetZ];</span>
             }
         }
 
-<span class="fc" id="L125">        height /= 27;</span>
-<span class="fc" id="L126">        height = height * intensity - Math.pow(height * 0.45, 2) + 0.2;</span>
-<span class="fc" id="L127">        return height;</span>
+<span class="fc" id="L131">        height /= 27;</span>
+<span class="fc" id="L132">        height = height * intensity - Math.pow(height * 0.45, 2) + 0.2;</span>
+<span class="fc" id="L133">        return height;</span>
     }
     
 }
