@@ -17,23 +17,10 @@
  */
 package com.karusmc.raster.blocks;
 
-import net.minecraft.server.v1_10_R1.*;
-import org.bukkit.craftbukkit.v1_10_R1.*;
-
 /**
  *
  * @author PanteLegacy @ karusmc.com
  */
-public class FastBlockManipulator {
-    
-    private BlockPosition.MutableBlockPosition position;
-    private Block block;
-    
-    
-    public FastBlockManipulator(BlockPosition.MutableBlockPosition position, Block block) {
-        this.position = position;
-        this.block = block;
-    }
-    
+public class CompatibilityManipulator {
     
 }
