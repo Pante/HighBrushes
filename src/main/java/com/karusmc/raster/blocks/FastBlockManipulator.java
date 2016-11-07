@@ -17,22 +17,38 @@
  */
 package com.karusmc.raster.blocks;
 
-import net.minecraft.server.v1_10_R1.*;
+import com.karusmc.raster.history.Edit;
 
 /**
  *
  * @author PanteLegacy @ karusmc.com
  */
-public class FastManipulator {
+public class FastBlockManipulator implements Manipulator {
     
-    private BlockPosition.MutableBlockPosition position;
-    private Block block;
+    private Relighting relighting;
+    private int blockLimit;
     
     
-    public FastManipulator(BlockPosition.MutableBlockPosition position, Block block) {
-        this.position = position;
-        this.block = block;
+    public FastBlockManipulator(Relighting relighting, int blockLimit) {
+        this.relighting = relighting;
+        this.blockLimit = blockLimit;
     }
     
+    
+    @Override
+    public void process(Edit edit) {
+        
+    }
+
+    
+    @Override
+    public Relighting getRelighting() {
+        return relighting;
+    }
+
+    @Override
+    public void setRelighting(Relighting relighting) {
+        this.relighting = relighting;
+    }
     
 }

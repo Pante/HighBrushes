@@ -15,32 +15,49 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package com.karusmc.raster.history;
+package com.karusmc.raster.painter;
 
-import org.bukkit.block.Block;
+import org.bukkit.util.Vector;
 
+import junitparams.*;
+
+import org.junit.*;
+import org.junit.runner.RunWith;
+
+import static org.junit.Assert.*;
 /**
  *
  * @author PanteLegacy @ karusmc.com
  */
-public class EditMemento {
+@RunWith(JUnitParamsRunner.class)
+public class RotationTest {
     
-    private String world;
-    private int[] x, y, z;
-    private int[] combinedBlockID;
+    private Vector vector;
+    private int size;
     
     
-    public EditMemento(String world, int editSize) {
-        this.world = world;
+    public RotationTest() {
+        vector = new Vector();
+        size = 10;
+    }
+    
+    
+    @Before
+    public void setup() {
+        vector.setX(1);
+        vector.setZ(2);
+    }
+    
+    
+    @Test
+    @Parameters({"174, 1, 2", "-47, 2, 9", "44, 9, 8", "110, 8, 1"})
+    public void rotate(float yaw, int expectedX, int expectedZ) {
+        Rotation.rotate(yaw, size, vector);
         
-        x = new int[editSize];
-        y = new int[editSize];
-        z = new int[editSize];
-        combinedBlockID = new int[editSize];
+        assertEquals(expectedX, vector.getBlockX());
+        assertEquals(expectedZ, vector.getBlockZ());
+        assertEquals(0, vector.getBlockY());
     }
     
-    public String getWorld() {
-        return world;
-    }
     
 }

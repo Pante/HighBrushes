@@ -129,8 +129,7 @@ public class Brush {
         }
 
         height /= 27;
-        height = height * intensity - Math.pow(height * 0.45, 2) + 0.2;
-        return height;
+        return height * intensity - Math.pow(height * 0.45, 2) + 0.2;
     }
     
 }

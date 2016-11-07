@@ -17,10 +17,20 @@
  */
 package com.karusmc.raster.blocks;
 
+import com.karusmc.raster.history.Edit;
+
 /**
  *
  * @author PanteLegacy @ karusmc.com
  */
-public class CompatibilityManipulator {
+public interface Manipulator {
+    
+    public void process(Edit edit);
+    
+    
+    public Relighting getRelighting();
+    
+    public void setRelighting(Relighting relighting);
     
 }
+
